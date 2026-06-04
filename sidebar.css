@@ -1,0 +1,148 @@
+/* =========================
+   SIDEBAR BASE STYLES
+========================= */
+#chat-checkpoints-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 320px;
+    height: 100vh;
+    background: #202123;
+    color: white;
+    z-index: 999999;
+    padding: 20px;
+    box-sizing: border-box;
+    border-left: 1px solid #444;
+    overflow-y: auto;
+    font-family: Arial, sans-serif;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* =========================
+   HEADER
+========================= */
+.cc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.cc-header h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+/* =========================
+   CLOSE BUTTON
+========================= */
+#close-sidebar-btn {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#close-sidebar-btn:hover {
+    color: #ff5555;
+}
+
+/* =========================
+   SAVE BUTTON
+========================= */
+#add-checkpoint-btn {
+    width: 100%;
+    padding: 12px;
+    background: #10a37f;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background 0.2s;
+}
+
+#add-checkpoint-btn:hover {
+    background: #0e8e6d;
+}
+
+/* =========================
+   CHECKPOINT LIST
+========================= */
+#checkpoint-list p {
+    color: #aaa;
+    margin: 0;
+    font-size: 14px;
+}
+
+/* =========================
+   CHECKPOINT ITEM
+========================= */
+.checkpoint-item {
+    background: #2b2d31;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    border: 1px solid #3d3f45;
+    transition: 0.2s;
+}
+
+.checkpoint-item:hover {
+    background: #34363c;
+}
+
+.checkpoint-item h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.checkpoint-item p {
+    margin-top: 6px;
+    color: #aaa;
+    font-size: 13px;
+}
+
+/* =========================
+   OPEN SIDEBAR BUTTON
+========================= */
+
+#open-checkpoints-btn {
+
+    position: fixed;
+
+    right: 20px;
+
+    bottom: 20px;
+
+    z-index: 999999;
+
+    width: 55px;
+
+    height: 55px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #10a37f;
+
+    color: white;
+
+    font-size: 24px;
+
+    cursor: pointer;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+
+    transition: 0.2s;
+}
+
+#open-checkpoints-btn:hover {
+
+    background: #0e8e6d;
+
+    transform: scale(1.05);
+}

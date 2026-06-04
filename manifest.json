@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Chat Checkpoints",
+  "version": "1.0.0",
+  "description": "Bookmark and navigate long ChatGPT conversations easily.",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://chatgpt.com/*",
+    "https://chat.openai.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*"
+      ],
+      "js": ["content.js"],
+      "css": ["sidebar.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}
