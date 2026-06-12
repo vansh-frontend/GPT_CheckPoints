@@ -1,148 +1,557 @@
-/* =========================
-   SIDEBAR BASE STYLES
-========================= */
+/* =============================================================
+   CHAT CHECKPOINTS SIDEBAR — v2
+   Dark glass-panel sidebar with purple accent system
+   ============================================================= */
+
+/* ── Design Tokens ─────────────────────────────────────────── */
+:root {
+  --cc-bg-base:         #0f1117;
+  --cc-bg-surface:      #181b24;
+  --cc-bg-hover:        #1e2130;
+  --cc-bg-input:        rgba(255, 255, 255, 0.04);
+
+  --cc-border:          rgba(255, 255, 255, 0.08);
+  --cc-border-hover:    rgba(255, 255, 255, 0.12);
+  --cc-border-accent:   rgba(123, 110, 246, 0.35);
+
+  --cc-accent-start:    #7b6ef6;
+  --cc-accent-end:      #5e8bff;
+  --cc-accent-glow:     rgba(94, 139, 255, 0.35);
+  --cc-accent-muted:    rgba(123, 110, 246, 0.18);
+  --cc-accent-text:     #a79ff8;
+  --cc-accent-stripe:   #7b6ef6;
+
+  --cc-teal-muted:      rgba(29, 158, 117, 0.18);
+  --cc-teal-text:       #5ecba1;
+  --cc-teal-border:     rgba(29, 158, 117, 0.25);
+
+  --cc-amber-muted:     rgba(186, 117, 23, 0.2);
+  --cc-amber-text:      #f0a835;
+  --cc-amber-border:    rgba(186, 117, 23, 0.3);
+
+  --cc-text-primary:    #d8daf0;
+  --cc-text-secondary:  #7a7f99;
+  --cc-text-muted:      #434769;
+  --cc-text-faint:      #454864;
+
+  --cc-danger:          #e05c5c;
+  --cc-danger-muted:    rgba(220, 60, 60, 0.12);
+  --cc-danger-border:   rgba(220, 60, 60, 0.25);
+
+  --cc-sidebar-w:       300px;
+  --cc-radius-sm:       6px;
+  --cc-radius-md:       8px;
+  --cc-radius-lg:       12px;
+  --cc-radius-xl:       16px;
+  --cc-radius-full:     9999px;
+
+  --cc-ease:            cubic-bezier(0.22, 1, 0.36, 1);
+  --cc-fast:            150ms;
+  --cc-base:            260ms;
+
+  --cc-shadow-fab:      0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+
+/* ── Sidebar Shell ──────────────────────────────────────────── */
 #chat-checkpoints-sidebar {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 320px;
-    height: 100vh;
-    background: #202123;
-    color: white;
-    z-index: 999999;
-    padding: 20px;
-    box-sizing: border-box;
-    border-left: 1px solid #444;
-    overflow-y: auto;
-    font-family: Arial, sans-serif;
-    transition: transform 0.3s ease-in-out;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 999999;
+
+  display: flex;
+  flex-direction: column;
+
+  width: var(--cc-sidebar-w);
+  height: 100dvh;
+
+  background: var(--cc-bg-base);
+  border-left: 0.5px solid var(--cc-border);
+  border-radius: var(--cc-radius-xl) 0 0 var(--cc-radius-xl);
+
+  color: var(--cc-text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI",
+               Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+
+  overflow: hidden;
+  transform: translateX(0);
+  transition: transform var(--cc-base) var(--cc-ease);
+
+  &.cc-hidden {
+    transform: translateX(calc(100% + 1px));
+  }
 }
 
-/* =========================
-   HEADER
-========================= */
+
+/* ── Header (sticky) ────────────────────────────────────────── */
 .cc-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+  flex-shrink: 0;
+  padding: 16px 16px 0;
 }
 
-.cc-header h2 {
-    margin: 0;
-    font-size: 22px;
+.cc-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
 }
 
-/* =========================
-   CLOSE BUTTON
-========================= */
+.cc-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cc-text-primary);
+}
+
+.cc-title i {
+  font-size: 16px;
+  color: var(--cc-accent-stripe);
+}
+
+.cc-count-badge {
+  font-size: 10px;
+  font-weight: 500;
+  background: var(--cc-accent-muted);
+  color: var(--cc-accent-text);
+  padding: 2px 7px;
+  border-radius: var(--cc-radius-full);
+  border: 0.5px solid rgba(123, 110, 246, 0.3);
+}
+
+
+/* ── Close Button ───────────────────────────────────────────── */
 #close-sidebar-btn {
-    background: transparent;
-    border: none;
-    color: #fff;
-    font-size: 20px;
-    cursor: pointer;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--cc-bg-input);
+  border: 0.5px solid var(--cc-border);
+  border-radius: var(--cc-radius-md);
+  color: var(--cc-text-secondary);
+  font-size: 14px;
+  cursor: pointer;
+
+  transition: background var(--cc-fast) ease,
+              color       var(--cc-fast) ease,
+              border-color var(--cc-fast) ease;
 }
 
 #close-sidebar-btn:hover {
-    color: #ff5555;
+  background: var(--cc-danger-muted);
+  border-color: var(--cc-danger-border);
+  color: var(--cc-danger);
 }
 
-/* =========================
-   SAVE BUTTON
-========================= */
+#close-sidebar-btn:focus-visible {
+  outline: 2px solid var(--cc-accent-stripe);
+  outline-offset: 2px;
+}
+
+
+/* ── Search Bar ─────────────────────────────────────────────── */
+.cc-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  background: var(--cc-bg-input);
+  border: 0.5px solid var(--cc-border);
+  border-radius: var(--cc-radius-lg);
+  padding: 8px 12px;
+  margin-bottom: 12px;
+
+  transition: border-color var(--cc-fast) ease;
+}
+
+.cc-search:focus-within {
+  border-color: rgba(123, 110, 246, 0.4);
+}
+
+.cc-search i {
+  font-size: 14px;
+  color: var(--cc-text-faint);
+  flex-shrink: 0;
+}
+
+.cc-search input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 13px;
+  color: var(--cc-text-primary);
+  font-family: inherit;
+}
+
+.cc-search input::placeholder {
+  color: var(--cc-text-faint);
+}
+
+
+/* ── Save Button ────────────────────────────────────────────── */
 #add-checkpoint-btn {
-    width: 100%;
-    padding: 12px;
-    background: #10a37f;
-    border: none;
-    border-radius: 8px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    margin-bottom: 20px;
-    transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  width: 100%;
+  padding: 9px 16px;
+  margin-bottom: 14px;
+
+  background: linear-gradient(135deg, var(--cc-accent-start), var(--cc-accent-end));
+  border: none;
+  border-radius: var(--cc-radius-lg);
+
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+
+  transition: opacity var(--cc-fast) ease,
+              transform var(--cc-fast) ease;
+}
+
+#add-checkpoint-btn i {
+  font-size: 15px;
 }
 
 #add-checkpoint-btn:hover {
-    background: #0e8e6d;
+  opacity: 0.88;
 }
 
-/* =========================
-   CHECKPOINT LIST
-========================= */
-#checkpoint-list p {
-    color: #aaa;
-    margin: 0;
-    font-size: 14px;
+#add-checkpoint-btn:active {
+  transform: scale(0.98);
 }
 
-/* =========================
-   CHECKPOINT ITEM
-========================= */
+#add-checkpoint-btn:focus-visible {
+  outline: 2px solid var(--cc-accent-stripe);
+  outline-offset: 3px;
+}
+
+
+/* ── Scrollable Body ────────────────────────────────────────── */
+.cc-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 12px 16px;
+
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.06) transparent;
+}
+
+.cc-body::-webkit-scrollbar        { width: 3px; }
+.cc-body::-webkit-scrollbar-track  { background: transparent; }
+.cc-body::-webkit-scrollbar-thumb  {
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: var(--cc-radius-full);
+}
+
+
+/* ── Section Label ──────────────────────────────────────────── */
+.cc-section-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--cc-text-faint);
+  margin: 8px 4px 7px;
+}
+
+
+/* ── Checkpoint Card ────────────────────────────────────────── */
 .checkpoint-item {
-    background: #2b2d31;
-    padding: 12px;
-    border-radius: 10px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    border: 1px solid #3d3f45;
-    transition: 0.2s;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  padding: 11px 13px;
+  margin-bottom: 7px;
+
+  background: var(--cc-bg-surface);
+  border: 0.5px solid var(--cc-border);
+  border-radius: var(--cc-radius-lg);
+
+  cursor: pointer;
+  overflow: hidden;
+
+  transition: background      var(--cc-fast) ease,
+              border-color    var(--cc-fast) ease,
+              transform       var(--cc-fast) ease;
+}
+
+/* left accent stripe */
+.checkpoint-item::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: transparent;
+  border-radius: var(--cc-radius-lg) 0 0 var(--cc-radius-lg);
+  transition: background var(--cc-fast) ease;
 }
 
 .checkpoint-item:hover {
-    background: #34363c;
+  background: var(--cc-bg-hover);
+  border-color: var(--cc-border-hover);
+}
+
+.checkpoint-item:hover::before {
+  background: var(--cc-accent-stripe);
+}
+
+.checkpoint-item.cc-active {
+  background: rgba(123, 110, 246, 0.1);
+  border-color: var(--cc-border-accent);
+}
+
+.checkpoint-item.cc-active::before {
+  background: var(--cc-accent-stripe);
+}
+
+.checkpoint-item:active {
+  transform: scale(0.99);
+}
+
+.checkpoint-item:focus-visible {
+  outline: 2px solid var(--cc-accent-stripe);
+  outline-offset: 2px;
+}
+
+/* card top row */
+.cc-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
 }
 
 .checkpoint-item h3 {
-    margin: 0;
-    font-size: 16px;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cc-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.checkpoint-item p {
-    margin-top: 6px;
-    color: #aaa;
-    font-size: 13px;
+/* tag pills */
+.cc-tag {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 7px;
+  border-radius: var(--cc-radius-full);
+  white-space: nowrap;
 }
 
-/* =========================
-   OPEN SIDEBAR BUTTON
-========================= */
+.cc-tag--purple {
+  background: var(--cc-accent-muted);
+  color: var(--cc-accent-text);
+  border: 0.5px solid rgba(123, 110, 246, 0.3);
+}
 
+.cc-tag--teal {
+  background: var(--cc-teal-muted);
+  color: var(--cc-teal-text);
+  border: 0.5px solid var(--cc-teal-border);
+}
+
+.cc-tag--amber {
+  background: var(--cc-amber-muted);
+  color: var(--cc-amber-text);
+  border: 0.5px solid var(--cc-amber-border);
+}
+
+/* meta row */
+.cc-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--cc-text-muted);
+}
+
+.cc-card-meta i {
+  font-size: 12px;
+}
+
+.cc-meta-dot {
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.5;
+}
+
+/* hover actions */
+.cc-card-actions {
+  display: flex;
+  gap: 5px;
+  margin-top: 7px;
+  opacity: 0;
+  transform: translateY(3px);
+  transition: opacity  var(--cc-fast) ease,
+              transform var(--cc-fast) ease;
+}
+
+.checkpoint-item:hover .cc-card-actions,
+.checkpoint-item:focus-within .cc-card-actions {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cc-card-action {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  font-size: 11px;
+  font-family: inherit;
+  padding: 3px 8px;
+  border-radius: var(--cc-radius-sm);
+  border: 0.5px solid var(--cc-border);
+  background: var(--cc-bg-input);
+  color: var(--cc-text-secondary);
+  cursor: pointer;
+
+  transition: background   var(--cc-fast) ease,
+              color         var(--cc-fast) ease,
+              border-color  var(--cc-fast) ease;
+}
+
+.cc-card-action i { font-size: 12px; }
+
+.cc-card-action:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--cc-text-primary);
+}
+
+.cc-card-action.cc-danger:hover {
+  background: var(--cc-danger-muted);
+  color: var(--cc-danger);
+  border-color: var(--cc-danger-border);
+}
+
+
+/* ── Empty State ────────────────────────────────────────────── */
+.cc-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 48px 16px;
+  text-align: center;
+}
+
+.cc-empty i {
+  font-size: 28px;
+  color: var(--cc-text-faint);
+  opacity: 0.5;
+}
+
+.cc-empty p {
+  font-size: 13px;
+  color: var(--cc-text-muted);
+  line-height: 1.5;
+  max-width: 180px;
+}
+
+
+/* ── Footer ─────────────────────────────────────────────────── */
+.cc-footer {
+  flex-shrink: 0;
+  padding: 10px 16px;
+  border-top: 0.5px solid var(--cc-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--cc-text-faint);
+}
+
+.cc-footer-count {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.cc-footer-count i { font-size: 13px; }
+
+.cc-shortcut {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: var(--cc-radius-sm);
+  border: 0.5px solid var(--cc-border);
+  background: var(--cc-bg-input);
+  color: var(--cc-text-muted);
+  font-family: monospace;
+}
+
+
+/* ── FAB — Open Sidebar Button ───────────────────────────────── */
 #open-checkpoints-btn {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 999999;
 
-    position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    right: 20px;
+  width: 52px;
+  height: 52px;
+  padding: 0;
 
-    bottom: 20px;
+  background: linear-gradient(135deg, var(--cc-accent-start), var(--cc-accent-end));
+  border: none;
+  border-radius: var(--cc-radius-full);
+  box-shadow: var(--cc-shadow-fab);
 
-    z-index: 999999;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
 
-    width: 55px;
-
-    height: 55px;
-
-    border: none;
-
-    border-radius: 50%;
-
-    background: #10a37f;
-
-    color: white;
-
-    font-size: 24px;
-
-    cursor: pointer;
-
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-
-    transition: 0.2s;
+  transition: opacity   var(--cc-fast) ease,
+              transform  var(--cc-fast) ease,
+              box-shadow var(--cc-fast) ease;
 }
 
 #open-checkpoints-btn:hover {
+  opacity: 0.9;
+  transform: scale(1.07);
+  box-shadow: 0 8px 24px var(--cc-accent-glow);
+}
 
-    background: #0e8e6d;
+#open-checkpoints-btn:active {
+  transform: scale(0.97);
+}
 
-    transform: scale(1.05);
+#open-checkpoints-btn:focus-visible {
+  outline: 2px solid var(--cc-accent-stripe);
+  outline-offset: 3px;
+}
+
+
+/* ── Reduced Motion ──────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0ms !important;
+    animation-duration:  0ms !important;
+  }
 }
